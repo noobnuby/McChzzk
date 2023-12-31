@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.22"
 }
 
 group = property("group")!!
@@ -10,27 +10,27 @@ val copy_dir = "${property("copy_dir")}"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
-    implementation(files("libs/kommand-api-3.1.8.jar"))
+    implementation("io.github.R2turnTrue:chzzk4j:1.0-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:${property("paper_version")}-R0.1-SNAPSHOT")
 }
+
+val shade = configurations.create("shade")
+shade.extendsFrom(configurations.implementation.get())
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
     processResources {
-        filesMatching("plugin.yml") {
+        filesMatching("*.yml") {
             expand(project.properties)
         }
     }
@@ -40,6 +40,8 @@ tasks {
         archiveClassifier.set("")
 
         from(sourceSets["main"].output)
+        from (shade.map { if (it.isDirectory) it else zipTree(it) })
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
         if(copy_dir != "") {
             doLast {

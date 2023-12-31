@@ -1,27 +1,27 @@
-# Kotlin Plugin Template
+# McChzzk
 
-코틀린 PaperMC Plugin 템플릿입니다.
+네이버 방송 플랫폼 "치지직"을 마인크래프트에 연동시킨 플러그인입니다.
 
 # Library
 
-* [Kommand](https://github.com/monun/kommand)
+* [chzzk4j](https://github.com/R2turnTrue/chzzk4j)
 
 # Configuration
 
-gradle.properties
+mc config.yml
 
-```gradle
-group=com.noobnuby.plugin (group)
-version=1.0.0 (ver)
-paper_version=1.20.2 (papermc ver)
-copy_dir=/Users/noobnuby (copy folder !not str) 
+```yml
+channelId : (id)
 ```
 
-# Build
+## features
 
-* `./gradlew paperJar`
-* `Gradle -> Tasks -> other -> paperJar`
+- [x] Import Chzzk Chat into Minecraft
+- [x] Config Channel id
+### need to implement
+
+- [ ] Chzzk donate event
 
 # License
 
-[GPL-3.0](https://github.com/NOOBNUBY/kotlin-plugin-template/blob/master/LICENSE)
+[GPL-3.0](https://github.com/NOOBNUBY/McChzzk/blob/master/LICENSE)
